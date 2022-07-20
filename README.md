@@ -9,3 +9,5 @@ our stakeholders are requesting the following features:
 3- a backend server to presist the data on (and do studies on what clients need)
 
 attached is what our previous lead software developer has finished, feel free to fix it and continue developing it or just redo the entire thing, it's up to you, just make sure you deliver on time.
+
+Good Luck, and congrats on your promotion
