@@ -5,44 +5,60 @@
     <link rel="stylesheet" href="main.css"/>
     <script defer src="main.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&family=Edu+SA+Beginner:wght@400;500;600;700&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
 
 
+
+
+
     <!--  Icons  -->
     <script src="https://kit.fontawesome.com/12f9c0d1e0.js" crossorigin="anonymous"></script>
-
+    <script src="./packages/bson.bundle.js"></script>
+    <script defer src="main.js"></script>
 </head>
 <body>
 <div class="main">
     <div id="action-letter"></div>
     <h1 class="hero-title">
-        Todo App
+        Welcome to ToDO App
     </h1>
-
-    <!--  Add task button  -->
-    <div id="add-task-button" class="box add-task-box">
-        <div class="pink-box">
-            <i class="fa-solid fa-crow"></i>
-        </div>
-        Add a task
+    <div class="instructions">
+        <p>How to use the app</p>
+        <ul>
+            <li >if you want to add a new task, just click on the "Add Task" button then a new task will appear then you can write inside it</li>
+            <li>if you want to delete the task just click on the delete button in the end of each task</li>
+            <li>if you want to edit a task just click on the text of the task then you will be able to edit</li>
+          </ul>
+        
     </div>
 
-    <!--  Tasks  -->
-    Tasks
+    <div id="add-task-button" class="box add-task-box">
+        <div class="pink-box">
+            <!-- <i class="fa-solid fa-check-double"></i> -->
+            <i class="fas fa-plus-square"></i>
+        </div>
+        Add Task
+    </div>
+
+    TASKS
     <div id="tasks" class="tasks">
 
 
         <div class="box task-box">
             <div class="task-checkbox">
-                <i class="fa-regular fa-face-grin-beam icon"></i>
-            </div>
-            Send collaboration files to Jerusha
-        </div>
-    </div>
+                <i class="fa-solid fa-check"></i>
+                </div>
+                <textarea class="task-input" oninput="autoHeight(this)"></textarea>
 
+                <div class="spacer"></div>
+    
+                <i class="fa-regular fa-trash-can"></i>
 </div>
+
+
 
 </body>
 </html>

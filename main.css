@@ -12,20 +12,30 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: #181820;
+    background-color: #606060;
     color: var(--our-white);
-    font-size: 18px;
+    font-size: 22px;
     font-family: 'Roboto', sans-serif;
     padding: 16px;
     padding-top: 8px;
 }
 
+.instructions {
+    font-family: 'Edu NSW ACT Foundation', cursive;
+font-family: 'Edu SA Beginner', cursive;
+font-family: 'Roboto', sans-serif;
+}
+
 .hero-title {
-    font-size: 24px;
+    color: black;
+    font-size: 30px;
     line-height: 24px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main {
@@ -45,23 +55,30 @@ body {
     align-items: center;
     gap: 8px;
     border-radius: 16px;
-    padding: 10px;
+    padding: 15px;
     color: var(--our-text-grey);
     font-size: 13px;
     cursor: pointer;
 }
 
+.spacer {
+    flex: 1;
+}
+
 .add-task-box {
-    border: rgba(39, 40, 51, 0.6) 2px solid;
+    border: rgba(39, 40, 51, 0.6) 2px ridge;
+    border-width: 3px;
+    width: 120px;
 }
 
 
 .add-task-box:hover {
     background-color: var(--our-grey);
+
 }
 
 .pink-box {
-    background-color: #fc76a1;
+    background-color: #ffffff;
     width: 16px;
     height: 16px;
     border-radius: 6px;
@@ -73,7 +90,7 @@ body {
 }
 
 .task-checkbox {
-    border: #fc76a1 2px solid;
+    border: #ffffff 2px solid;
     width: 16px;
     height: 16px;
     border-radius: 6px;
@@ -97,7 +114,7 @@ body {
 
 
 .task-box.checked > .task-checkbox {
-    background-color: #fc76a1;
+    background-color: #ffffff;
 }
 
 .task-box {
@@ -107,6 +124,17 @@ body {
     transition: transform 300ms ease-in;
 }
 
-/* .task-box:hover {
+.task-box:hover {
     transform: rotateY(-10deg);
-} */
+}
+
+.task-input {
+    border: none;
+    background-color: transparent;
+    color: var(--our-white);
+    width: 100%;
+}
+
+.task-input:active, .task-input:focus {
+    outline: none;
+}
