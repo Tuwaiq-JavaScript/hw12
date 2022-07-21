@@ -1,8 +1,4 @@
-/* Black #181820 */
-/* Grey #272833 */
-/* White #fefeff */
-/* Orange #fc9786 */
-/* Purple #c048d2 */
+
 :root {
     --our-black: #181820;
     --our-grey: #272833;
@@ -12,23 +8,24 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
-
 body {
     background-color: #181820;
-    color: var(--our-white);
+     color: peru;
     font-size: 18px;
-    font-family: 'Roboto', sans-serif;
+ font-family: 'Edu VIC WA NT Beginner', cursive;
+    /* font-family: 'Roboto', sans-serif; */
     padding: 16px;
     padding-top: 8px;
-}
+} 
 
 .hero-title {
     font-size: 24px;
     line-height: 24px;
+    text-align:center;
 }
-
-.main {
+main {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -38,43 +35,64 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
+}.spacer{
+    flex: 1;
+    
+}.task.input{
+    border: none;
+    background-color: transparent;
+    color: black;
+    width: 100%;
+/* line-clamp: 3; */
 
-.box {
+}.task-input:active , .task-input:focus{
+    /* border: none; */
+    outline: none;
+
+}.box {
     display: flex;
     align-items: center;
-    gap: 8px;
+
+    gap: 10px;
     border-radius: 16px;
     padding: 10px;
-    color: var(--our-text-grey);
-    font-size: 13px;
+    color: peru;
+    font-size: 12px;
+    cursor: pointer;
+}.box1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 16px;
+    padding: 10px;
+    color: peru;
+    font-size: 12px;
     cursor: pointer;
 }
 
 .add-task-box {
     border: rgba(39, 40, 51, 0.6) 2px solid;
+
+    /* border:#7F8487 2px solid; */
 }
-
-
 .add-task-box:hover {
     background-color: var(--our-grey);
 }
-
 .pink-box {
-    background-color: #fc76a1;
+    background-color:#7F8487;
     width: 16px;
     height: 16px;
-    border-radius: 6px;
+    border-radius: 4px;
     color: var(--our-black);
     padding: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .task-checkbox {
-    border: #fc76a1 2px solid;
+    border: #7F8487 2px solid;
     width: 16px;
+    min-width: 16px;
     height: 16px;
     border-radius: 6px;
     color: var(--our-black);
@@ -83,21 +101,17 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .task-checkbox > .icon {
     display: none;
     visibility: hidden;
 }
 
-
 .task-box.checked > .task-checkbox > .icon {
     display: block;
     visibility: visible;
 }
-
-
 .task-box.checked > .task-checkbox {
-    background-color: #fc76a1;
+    background-color: #7F8487;
 }
 
 .task-box {
@@ -106,7 +120,18 @@ body {
     transform-origin: center right;
     transition: transform 300ms ease-in;
 }
-
-/* .task-box:hover {
+.task-box:hover {
     transform: rotateY(-10deg);
-} */
+}
+
+
+
+
+
+
+
+
+
+
+
+
