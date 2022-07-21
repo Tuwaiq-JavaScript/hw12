@@ -1,48 +1,36 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Page Title</title>
-    <link rel="stylesheet" href="main.css"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="main.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-
-
-    <!--  Icons  -->
-    <script src="https://kit.fontawesome.com/12f9c0d1e0.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
 </head>
 <body>
-<div class="main">
-    <div id="action-letter"></div>
-    <h1 class="hero-title">
-        Todo App
-    </h1>
+    <div class="container">
+        <h2 class="hero-title">
+            ToDo List
+        </h2>
+		<h3> Add a task</h3>
+		<p>
+			<input id="new-task" type="text"><button class="button_add">Add</button>
+		</p>
 
-    <!--  Add task button  -->
-    <div id="add-task-button" class="box add-task-box">
-        <div class="pink-box">
-            <i class="fa-solid fa-crow"></i>
-        </div>
-        Add a task
-    </div>
+		<h3> Tasks </h3>
+		<ul id="incomplete-tasks">
+			<li><input type="checkbox">
+                <label>gym</label>
+                <input type="text">
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            </li>
+		</ul>
 
-    <!--  Tasks  -->
-    Tasks
-    <div id="tasks" class="tasks">
-
-
-        <div class="box task-box">
-            <div class="task-checkbox">
-                <i class="fa-regular fa-face-grin-beam icon"></i>
-            </div>
-            Send collaboration files to Jerusha
-        </div>
-    </div>
-
-</div>
-
+	</div>
+    
 </body>
 </html>
