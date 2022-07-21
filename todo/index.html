@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>my todo</title>
+</head>
+<body>
+    <div class="container ">
+        
+    <div class="welcome line-break">
+        <h1>What do you <br>want to do <br> <img src="images/calendar-check-regular.svg" alt="" width="30"> <br>List what todo </h1>
+         
+    </div>
+    <hr >
+   
+       <!-- start of do to  -->
+        <div class="myTodo  ">
+
+            <div class="inputvalue">
+                <input class="inputVal" type="text" placeholder="Add your task" value="">
+                
+                <button class="btn">Add Task</button>
+            </div>
+            
+           
+            <div class="todoLists">
+                
+                
+        
+
+            </div>
+            <div>
+            <button class="clearTask" onclick="clearTask()">Clear all Task </button>
+        </div>
+    </div>
+
+
+    <script src="./packages/bson.bundle.js"></script>
+
+    <script src="main.js"></script>
+</body>
+</html>

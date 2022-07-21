@@ -1,0 +1,144 @@
+*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 20px;
+    box-sizing: border-box;
+}
+body{
+    background: #92a9c2;
+  
+}
+
+.welcome{
+    display: flex;
+    text-align: center;
+    margin-top: 7px;
+    justify-content: center;
+    
+    
+    }
+.container{
+
+
+    /* our border  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(230, 232, 235);
+    border-radius: 35px;
+  width: fit-content;
+    cursor: pointer;
+    outline-style: none;
+  
+}
+
+.todoList{
+
+    /* our todo  list  */
+    border-radius:35px;
+  
+  
+    border: 1px solid #939697;
+    cursor: pointer;
+  
+    background-color: #9daab8;
+    height: 40px;   
+    display: flex;
+    font-size: 15px;
+    font-weight: 400;
+  
+}
+.todoList:hover {
+    background-color: #939697;
+  }
+
+
+
+.deleteTask{
+
+    /* delete one task on side  */
+    cursor: pointer;
+ width: 25px;
+ height: 25px;
+    
+    border-radius: 50%;
+    background-color: #9daab8;
+    color: #ffffff;
+    outline: none;
+   
+ 
+}
+
+.checktask{
+
+    /* delete one task on side  */
+    
+    cursor: pointer;
+ width: 25px;
+ height: 25px;
+    background-color: unset;
+    color: #ffffff;
+    outline: none;
+   margin-left: 200px;
+
+
+}
+
+
+.inputvalue{
+   /* add new value  buttun */
+    display: flex;
+    /* margin: 5px;
+    margin-bottom: 60px; */
+    gap: 30px;
+}
+
+
+
+.inputVal{
+
+    /* new value input */
+    width: 300px;
+    height: 45px;
+    border-radius: 35px;
+   padding-inline-start: 40px;
+    border: 2px solid  #d1d3d4;
+    color: #0c0a0a;
+  
+    
+}
+
+
+.inputVal:focus{
+      /* new value input */
+    outline: none;
+    border-color: #9daab8;
+}
+
+
+
+.btn{
+
+     /* add task button  */
+    width: 100px;
+    background-color: #9daab8;
+    color: #ffffff;
+    font-weight: bold;
+     cursor: pointer;
+    transition: 0.3s;
+    
+}
+
+/* delete all task button  */
+.clearTask{
+    width: 100px;
+    background-color: #9daab8;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 20px;
+     
+}
+
