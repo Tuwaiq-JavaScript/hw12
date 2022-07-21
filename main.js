@@ -101,11 +101,11 @@ function autoHeight(elem) {  /* javascript */
 	elem.style.height = (elem.scrollHeight) + 'px';
 }
  async function getallTasks(){
-    const result =await fetch("http://127.0.0.1:3009/tasks");
+    const result =await fetch('http://127.0.0.1:3009/tasks');
       return await result.json();
 } 
 async function deleteTask (task_id){
-    const result =await fetch("http://127.0.0.1:3009/tasks/${task_id}", {method:"DELETE"});
+    await fetch(`http://127.0.0.1:3009/tasks/${task_id}`, {method:'DELETE' });
 }
 
 
