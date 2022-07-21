@@ -116,6 +116,11 @@ async function upsertTask(task) {
 	});
 }
 
+// function autoHeight(elem) {  /* javascript */
+// 	elem.style.height = '1px';
+// 	elem.style.height = (elem.scrollHeight) + 'px';
+// }
+
 // const tasksDiv = document.getElementById('tasks');
 
 // const addTaskButton = document.getElementById('add-task-button');
@@ -148,11 +153,11 @@ async function upsertTask(task) {
 // /// Save to local storage
 // saveToLocalStorage();
 // });
-// /// Update UI
-// updateHtmlUi();
+// // /// Update UI
+// // updateHtmlUi();
 
-// /// Save to local storage
-// saveToLocalStorage();
+// // /// Save to local storage
+// // saveToLocalStorage();
 
 
 // function saveToLocalStorage() {
@@ -217,6 +222,9 @@ async function upsertTask(task) {
    
 //     } }
     
+
+
+
 
 
 
