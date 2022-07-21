@@ -3,7 +3,7 @@ our lead software developer for the project codenamed `Saglney` has left the com
 
 Saglney is the next and upcoming todo application that will break the market with it's unique designs and amazing features.
 
-our stakeholders are requesting the following features:
+our stakeholders are requesting the following features:     
 1- an intro page explaining how to do every action of the CRUD (Create, Read, Update, Delete)   
 2- a number different designs to choose from (they are moody)   
 3- a backend server to presist the data on (and do studies on what clients need)    
