@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String
+  phone    String
+  password String
+  name     String
+  orders   Order[]
+
+  @@map("users")
+}
+
+model Employee {
+  employee_id String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  role        EmployeeRole
+  orders      Order[]
+
+  @@map("employees")
+}
+
+enum EmployeeRole {
+  manager
+  cashier
+  chief
+  waiter
+}
+
+model Order {
+  order_id String       @id @default(auto()) @map("_id") @db.ObjectId
+  meals    Meal[]
+  date     DateTime
+  togo     Boolean
+  rating   Int
+  payment  OrderPayment
+
+  user_id String? @db.ObjectId
+  User    User?   @relation(fields: [user_id], references: [user_id])
+
+  employee    Employee @relation(fields: [employee_id], references: [employee_id])
+  employee_id String   @db.ObjectId
+
+  @@map("orders")
+}
+
+enum OrderPayment {
+  cash
+  card
+  voucher
+}
+
+model Menu {
+  menu_id         String @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  restaurant_name String
+  meals           Meal[]
+
+  @@map("menus")
+}
+
+type Meal {
+  meal_id     String   @map("_id") @db.ObjectId
+  title       String
+  description String
+  type        MealType
+  price       Float
+  calories    Int
+  image_url   String
+  size        MealSize
+}
+
+enum MealType {
+  drink
+  chicken
+  meat
+  fish
+  sweet
+}
+
+enum MealSize {
+  small
+  medium
+  large
+}
+
+model Contact {
+  contact_id String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  phone      String
+}
+
+
+model Task {
+  task_id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  input      String
+ 
+}
