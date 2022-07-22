@@ -1,0 +1,174 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family:Arial, Helvetica, sans-serif ;
+}
+
+.container{
+    width: 600px;
+    margin: 30px auto 0;
+    background-color: #f6f6f6;
+    
+}
+.hero-title {
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #777;
+    padding:10px;
+}
+
+.container .addTask{
+    text-align: center;
+    padding: 15px;
+    background-color:#6278af;
+    position: relative;
+}
+/*
+.container .addTask textarea{
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    background-color: rgba(255,255,255,.3);
+    width: calc(100% - 15px);
+    color:#FFF;
+    font-size: 20px;
+}
+.container .addTask textarea:focus{
+    outline: none; 
+}*/
+.container .addTask .plus{
+  /* position:absolute;
+   align-items: center;
+    /*height: 40px;
+    width: 40px;
+    background-color: #FFF;
+    /*right: 12px;
+      padding: 3px;*/
+    border-radius: 10px;
+    line-height: 40px;
+    text-align:center;
+    color: #6278af;
+    cursor: pointer;
+    /*transition:  transform  2s;  */
+    transition:  transform .2s; /* Animation */;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    background-color: #FFF;
+
+
+}
+.container .addTask .plus:hover{
+ /* transform:rotate(65deg);*/
+ transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+
+   /* width: 300px;*/
+}
+.container .tasks{ 
+    padding: 16px;
+   /*------------new------*/
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  /*
+  .container .tasks .noTasks{
+    color: #777;
+    font-size: 15px;
+}
+.container .tasks > span{
+    display: block;
+    background-color: #FFF;
+
+}*/
+/*------------------------------------------------------------------------*/
+
+.box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 16px;
+    padding: 10px;
+    color: var(--our-text-grey);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.add-task-box {
+    border: rgba(39, 40, 51, 0.6) 2px solid;
+}
+
+
+.add-task-box:hover {
+    background-color: var(--our-grey);
+}
+
+.pink-box {
+    background-color: #6278af;
+    width: 16px;
+    height: 16px;
+    border-radius: 6px;
+    color: var(--our-black);
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-checkbox {
+    border: #6278af 2px solid;
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 6px;
+    color: var(--our-black);
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-checkbox > .icon {
+    display: none;
+    visibility: hidden;
+}
+
+
+.task-box.checked > .task-checkbox > .icon {
+    display: block;
+    visibility: visible;
+}
+
+
+.task-box.checked > .task-checkbox {
+    background-color: #6278af;
+}
+
+.task-box {
+    background-color: var(--our-grey);
+    transform-style: preserve-3d;
+    transform-origin: center right;
+  /*  transition: transform 300ms ease-in;*/
+}
+
+/*
+.task-box:hover {
+    transform: rotateY(-10deg);
+}*/
+
+.task-input {
+    border: none;
+    background-color: transparent;
+    color: var(--our-white);
+    width: 100%;
+}
+
+.task-input:active, .task-input:focus {
+    outline: none;
+}
