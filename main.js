@@ -1,42 +1,39 @@
+function autoHeight(elem) {   javascript 
+	elem.style.height = '1px';
+	elem.style.height = (elem.scrollHeight) + 'px';
+}
+
+
 const tasksDiv = document.getElementById('tasks');
 const addTaskButton = document.getElementById('add-task-button');
-const actionLetterDiv = document.getElementById('action-letter');
+/*const actionLetterDiv = document.getElementById('action-letter');*/
 
 /// Array to save tasks in memory
 let tasks = [];
 
+
 /// Load saved tasks from local storage to memory
-const jsonString = localStorage.getItem('tasks');
-if (jsonString) {
-	tasks = JSON.parse(jsonString);
-}
-
-/// Update UI to reflect the actual data
-updateHtmlUi();
-
-/// Listen for clicking the add button to add new task
-addTaskButton.addEventListener('click',async (event) => {
-
-	/// Add to memory
-	const newTaskInput = prompt('What do you want to add?');
-	if (!newTaskInput) return;
-	tasks.push({
-		input: newTaskInput,
-		id: new Date(),
-		isChecked: false,
-	});
-
-	/// Save to local storage
-	saveToLocalStorage();
-	
-	/// Update UI
+getAllTasks().then(apiTasks => {
+	tasks = apiTasks;
+	/// Update UI to reflect the actual data
 	updateHtmlUi();
 });
 
-function saveToLocalStorage() {
-	const jsonString = JSON.stringify(tasks);
-	localStorage.setItem('tasks', jsonString);
-}
+/// Listen for clicking the add button to add new task
+addTaskButton.addEventListener('click', async (event) => {
+
+	const newTask = {
+		task_id: new BSON.ObjectID(),
+		is_checked: false,
+		input: '',
+	};
+	/// Add to memory
+	await upsertTask(newTask);
+	tasks.push(newTask);
+
+	/// Update UI
+	updateHtmlUi();
+});
 
 function updateHtmlUi() {
 	tasksDiv.replaceChildren([]);
@@ -44,7 +41,7 @@ function updateHtmlUi() {
 	for (let i = 0; i < tasks.length; i++) {
 		const task = tasks[i];
 		const newTaskHtml = document.createElement('div');
-		if (task.isChecked) {
+		if (task.is_checked) {
 			newTaskHtml.className = 'box task-box checked';
 		} else {
 			newTaskHtml.className = 'box task-box';
@@ -53,81 +50,76 @@ function updateHtmlUi() {
 		const checkboxHtml = document.createElement('div');
 		checkboxHtml.className = 'task-checkbox';
 		checkboxHtml.innerHTML = '<i class="fa-regular fa-face-grin-beam icon"></i>';
-		checkboxHtml.addEventListener('click', (event) => {
-			tasks[i].isChecked = !tasks[i].isChecked;
-			saveToLocalStorage();
+		checkboxHtml.addEventListener('click', async (event) => {
+			const updatedTask = {
+				//Update for check
+				...tasks[i],
+				is_checked: !tasks[i].is_checked
+			};
+			await upsertTask(updatedTask);
+			tasks[i] = updatedTask;
 			updateHtmlUi();
-
 		});
 		newTaskHtml.appendChild(checkboxHtml);
 
-		const textHtml = document.createElement('p');
+		const textHtml = document.createElement('textarea');
+		textHtml.className = 'task-input';
 		textHtml.innerText = task.input;
+		textHtml.oninput = (event) => autoHeight(event.target);
+		/// onblur works after moving outside the input
+		textHtml.onblur = async (event) => {
+			const updatedTask = {
+				...tasks[i],
+				input: event.target.value,
+			};
+			await upsertTask(updatedTask);
+			tasks[i] = updatedTask;
+			updateHtmlUi();
+		};
+
 		newTaskHtml.appendChild(textHtml);
 
-		newTaskHtml.addEventListener('dblclick', (event) => {
-			event.preventDefault();
-			if (didPressD) {
-				const yes = confirm('are you sure?');
-				if (!yes) {
-					return;
-				}
-				tasks = tasks.filter((t, index) => index !== i);
-				updateHtmlUi();
-				saveToLocalStorage();
-				didPressD = false;
-				actionLetterDiv.innerText = 'P';
-			} else {
-				const value = prompt('What is the new value?');
-				if (!value) {
-					return;
-				}
-				tasks[i].input = value;
-				updateHtmlUi();
-				saveToLocalStorage();
-			}
-			return false;
+		const spacerHtml = document.createElement('div');
+		spacerHtml.className = 'spacer';
+		newTaskHtml.appendChild(spacerHtml);
 
+		const deleteIconHtml = document.createElement('div');
+		deleteIconHtml.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+		deleteIconHtml.addEventListener('click', async (event) => {
+			const task_id = tasks[i].task_id;
+			await deleteTask(task_id);
+			tasks = tasks.filter((t, index) => index !== i);
+			updateHtmlUi();
 		});
-
-		// newTaskHtml.addEventListener('');
+		newTaskHtml.appendChild(deleteIconHtml);
 
 		tasksDiv.appendChild(newTaskHtml);
 	}
+
+	const tasksInputs = document.getElementsByClassName('task-input');
+	for (const child of tasksInputs) {
+		autoHeight(child);
+	}
 }
 
-let didPressD = false;
-let didPressC = false;
+function autoHeight(elem) {  /* javascript */
+	elem.style.height = '1px';
+	elem.style.height = (elem.scrollHeight) + 'px';
+}
 
-window.addEventListener('keypress', (event) => {
-	if (event.key === 'd') {
-		didPressD = true;
-		didPressC = false;
-		actionLetterDiv.innerText = 'D';
+async function getAllTasks() {
+	const result = await fetch('http://126.0.0.1:3002/tasks');
+	return await result.json();
+}
 
-	} else if (event.key === 'p') {
-		didPressD = false;
-		didPressC = false;
-		actionLetterDiv.innerText = 'P';
-	} else if (event.key === 'c') {
-		didPressC = true;
-		didPressD = false;
-		actionLetterDiv.innerText = 'C';
-	}
-});
+async function deleteTask(task_id) {
+	await fetch(`http://127.0.0.1:3002/tasks/${task_id}`, { method: 'DELETE' });
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+async function upsertTask(task) {
+	await fetch(`http://127.0.0.1:3002/tasks`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(task)
+	});
+}
