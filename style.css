@@ -1,0 +1,191 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Khula:wght@300&family=Nunito&family=Source+Sans+Pro&display=swap');
+:root {
+    --our-black: #181820;
+    --our-white: #fefeff;
+    --our-text-grey: #b8b8bb;
+    --our-text-Purple:#44107a;
+    
+}
+
+
+body {
+    margin-top: 10%;
+    height: 100vh;
+	background-color:var(--our-black)
+}
+
+.container {
+	display: block;
+	width: 400px;
+	margin: 10px auto 100px;
+	background-color:#fff;
+	padding:0px 10px 10px 10px;
+	border-radius:20px
+}
+
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li * {
+	float: left;
+}
+
+li,
+h3 {
+	clear: both;
+	list-style: none;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+input,
+button {
+	outline: none;
+}
+
+.button_add {
+	background-color: rgba(104, 15, 220, 0.922);
+	border: 0px;
+	color:var(--our-white);
+	font-size: 14px;
+	width: 60px;
+	margin: 10px 0 0;
+	font-family: Lato, sans-serif;
+	cursor: pointer;
+    border-radius: 5px; 
+    margin-left: 7px;
+}
+.edit{
+    background-color:rgb(203, 52, 226);
+    border: 0px;
+	color:var(--our-white);
+	font-size: 14px;
+	width: 60px;
+	margin: 10px 0 0;
+	font-family: Lato, sans-serif;
+	cursor: pointer;
+    border-radius: 5px;  
+    margin-left: 7px;  
+}
+.delete{
+    background-color:#ff1361;
+    border: 0px;
+	color:var(--our-white);
+	font-size: 14px;
+	width: 60px;
+	margin: 10px 0 0;
+	font-family: Lato, sans-serif;
+	cursor: pointer;
+    border-radius: 5px;  
+    margin-left: 7px; 
+}
+button:hover {
+	color: black;
+}
+
+
+/* Heading */
+
+
+input[type="text"] {
+	margin: 0;
+	font-size: 18px;
+	line-height: 18px;
+	height: 18px;
+	padding: 10px;
+	border: 1px solid var(--our-text-Purple);
+	background: #fff;
+	border-radius: 6px;
+	font-family: Lato, sans-serif;
+	color: black;
+    
+}
+
+/* input[type="text"]:focus {
+	color: #333;
+} */
+
+
+/* New Task */
+
+
+
+input#new-task {
+	float: left;
+	width: 310px;
+}
+
+p > button:hover {
+	color: #d74ef6;
+}
+
+
+/* Task list */
+
+li {
+	overflow: hidden;
+	padding: 20px 0;
+	border-bottom: 1px solid #eee;
+}
+
+li > input[type="checkbox"] {
+	margin: 0 10px;
+	position: relative;
+	top: 15px;
+}
+
+li > label {
+	font-size: 18px;
+	line-height: 40px;
+	width: 200px;
+	padding: 0 0 0 11px;
+}
+
+li > input[type="text"] {
+	width: 226px;
+}
+
+li > .delete:hover {
+	color: #000000;
+}
+
+
+/* Edit Task */
+
+ul li input[type=text] {
+	display: none;
+}
+
+ul li.editMode input[type=text] {
+	display: block;
+}
+
+ul li.editMode label {
+	display: none;
+}
+  .hero-title {
+    text-transform: uppercase;
+    background-image: linear-gradient(
+      -225deg,
+      #231557 0%,
+      #44107a 29%,
+      #ff1361 67%,
+      #fff800 100%
+    );
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 4s linear infinite;
+    font-size: 28px;
+    padding-left: 32%;
+   
+  }
+  @keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+  }

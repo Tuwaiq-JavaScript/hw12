@@ -1,133 +1,123 @@
-const tasksDiv = document.getElementById('tasks');
-const addTaskButton = document.getElementById('add-task-button');
-const actionLetterDiv = document.getElementById('action-letter');
 
-/// Array to save tasks in memory
-let tasks = [];
+var taskInput = document.getElementById("new-task"); //new-task
+var addButton = document.getElementsByTagName("button")[0]; //first button
+var incompleteTasksHolder = document.getElementById("incomplete-tasks"); //incomplete-tasks
 
-/// Load saved tasks from local storage to memory
-const jsonString = localStorage.getItem('tasks');
-if (jsonString) {
-	tasks = JSON.parse(jsonString);
+
+//New Task List Item
+var createNewTaskElement = function(taskString) {
+	//Create List Item
+	var listItem = document.createElement("li");
+
+	//input (checkbox)
+	var checkBox = document.createElement("input"); // checkbox
+	//label
+	var label = document.createElement("label");
+	//input (text)
+	var editInput = document.createElement("input"); // text
+	//button.edit
+	var editButton = document.createElement("button");
+	//button.delete
+	var deleteButton = document.createElement("button");
+
+	//Each element needs modifying
+
+	checkBox.type = "checkbox";
+	editInput.type = "text";
+
+	editButton.innerText = "Edit";
+	editButton.className = "edit";
+	deleteButton.innerText = "Delete";
+	deleteButton.className = "delete";
+
+	label.innerText = taskString;
+
+	//Each element needs appending
+	listItem.appendChild(checkBox);
+	listItem.appendChild(label);
+	listItem.appendChild(editInput);
+	listItem.appendChild(editButton);
+	listItem.appendChild(deleteButton);
+
+	return listItem;
 }
 
-/// Update UI to reflect the actual data
-updateHtmlUi();
+//Add a new task
+var addTask = function() {
+	console.log("Add task...");
+	//Create a new list item with the text from #new-task:
+	var listItem = createNewTaskElement(taskInput.value);
+	//Append listItem to incompleteTasksHolder
+	incompleteTasksHolder.appendChild(listItem);
+	bindTaskEvents(listItem, taskCompleted);
 
-/// Listen for clicking the add button to add new task
-addTaskButton.addEventListener('click',async (event) => {
+	taskInput.value = "";
+}
 
-	/// Add to memory
-	const newTaskInput = prompt('What do you want to add?');
-	if (!newTaskInput) return;
-	tasks.push({
-		input: newTaskInput,
-		id: new Date(),
-		isChecked: false,
-	});
+//Edit an existing task
+var editTask = function() {
+	console.log("Edit task...");
 
-	/// Save to local storage
-	saveToLocalStorage();
+	var listItem = this.parentNode;
+
+	var editInput = listItem.querySelector("input[type=text");
+	var label = listItem.querySelector("label");
+
+	var containsClass = listItem.classList.contains("editMode");
+
+	if (containsClass) {
+		
+		label.innerText = editInput.value;
+	} else {
+		
+		editInput.value = label.innerText;
+	}
+	listItem.classList.toggle("editMode");
+
+}
+
+//Delete an existing task
+var deleteTask = function() {
+	console.log("Delete task...");
+	var listItem = this.parentNode;
+	var ul = listItem.parentNode;
+
+	//Remove the parent list item from the ul
+	ul.removeChild(listItem);
+}
+
+//Mark a task as complete
+var taskCompleted = function() {
+	console.log("Task complete...");
+	//Append the task list item to the #completed-tasks
+	var listItem = this.parentNode;
+	completedTasksHolder.appendChild(listItem);
+	bindTaskEvents(listItem, taskIncomplete);
+}
+
+
+
+var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
+	console.log("Bind list item events");
+	//select taskListItem's children
+	var checkBox = taskListItem.querySelector("input[type=checkbox]");
+	var editButton = taskListItem.querySelector("button.edit");
+	var deleteButton = taskListItem.querySelector("button.delete");
+
+	//bind editTask to edit button
+	editButton.onclick = editTask;
+	deleteButton.onclick = deleteTask;
+	checkBox.onchange = checkBoxEventHandler;
+}
+
+
+addButton.addEventListener("click", addTask);
+for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
 	
-	/// Update UI
-	updateHtmlUi();
-});
-
-function saveToLocalStorage() {
-	const jsonString = JSON.stringify(tasks);
-	localStorage.setItem('tasks', jsonString);
+	bindTaskEvents(incompleteTasksHolder.children[i], taskCompleted);
 }
 
-function updateHtmlUi() {
-	tasksDiv.replaceChildren([]);
+for (var i = 0; i < completedTasksHolder.children.length; i++) {
 
-	for (let i = 0; i < tasks.length; i++) {
-		const task = tasks[i];
-		const newTaskHtml = document.createElement('div');
-		if (task.isChecked) {
-			newTaskHtml.className = 'box task-box checked';
-		} else {
-			newTaskHtml.className = 'box task-box';
-		}
-
-		const checkboxHtml = document.createElement('div');
-		checkboxHtml.className = 'task-checkbox';
-		checkboxHtml.innerHTML = '<i class="fa-regular fa-face-grin-beam icon"></i>';
-		checkboxHtml.addEventListener('click', (event) => {
-			tasks[i].isChecked = !tasks[i].isChecked;
-			saveToLocalStorage();
-			updateHtmlUi();
-
-		});
-		newTaskHtml.appendChild(checkboxHtml);
-
-		const textHtml = document.createElement('p');
-		textHtml.innerText = task.input;
-		newTaskHtml.appendChild(textHtml);
-
-		newTaskHtml.addEventListener('dblclick', (event) => {
-			event.preventDefault();
-			if (didPressD) {
-				const yes = confirm('are you sure?');
-				if (!yes) {
-					return;
-				}
-				tasks = tasks.filter((t, index) => index !== i);
-				updateHtmlUi();
-				saveToLocalStorage();
-				didPressD = false;
-				actionLetterDiv.innerText = 'P';
-			} else {
-				const value = prompt('What is the new value?');
-				if (!value) {
-					return;
-				}
-				tasks[i].input = value;
-				updateHtmlUi();
-				saveToLocalStorage();
-			}
-			return false;
-
-		});
-
-		// newTaskHtml.addEventListener('');
-
-		tasksDiv.appendChild(newTaskHtml);
-	}
+	bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
 }
-
-let didPressD = false;
-let didPressC = false;
-
-window.addEventListener('keypress', (event) => {
-	if (event.key === 'd') {
-		didPressD = true;
-		didPressC = false;
-		actionLetterDiv.innerText = 'D';
-
-	} else if (event.key === 'p') {
-		didPressD = false;
-		didPressC = false;
-		actionLetterDiv.innerText = 'P';
-	} else if (event.key === 'c') {
-		didPressC = true;
-		didPressD = false;
-		actionLetterDiv.innerText = 'C';
-	}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
