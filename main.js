@@ -1,121 +1,129 @@
-const tasksDiv = document.getElementById('tasks');
-const addTaskButton = document.getElementById('add-task-button');
-const actionLetterDiv = document.getElementById('action-letter');
 
-/// Array to save tasks in memory
-let tasks = [];
+const courseDiv = document.getElementById('all-course');
+const addCourseButton = document.getElementById('add-course');
 
-/// Load saved tasks from local storage to memory
-const jsonString = localStorage.getItem('tasks');
-if (jsonString) {
-	tasks = JSON.parse(jsonString);
-}
+/// Array to save course in memory
+let courses = [];
+ 
 
-/// Update UI to reflect the actual data
-updateHtmlUi();
+getAllTasks().then(apiTasks => {
+	courses = apiTasks;
+	/// Update UI to reflect the actual data
+	updateHtmlUi();
+});
 
-/// Listen for clicking the add button to add new task
-addTaskButton.addEventListener('click',async (event) => {
+
+
+
+/// Listen for clicking the add button to add new course
+addCourseButton.addEventListener('click', (event) => {
 
 	/// Add to memory
-	const newTaskInput = prompt('What do you want to add?');
-	if (!newTaskInput) return;
-	tasks.push({
-		input: newTaskInput,
-		id: new Date(),
-		isChecked: false,
-	});
-
-	/// Save to local storage
-	saveToLocalStorage();
 	
+	const newTask = {
+		courses_id: new BSON.ObjectID(),
+		is_checked: false,
+		input: '',
+	};
+	await upsertTask(newTask);
+	tasks.push(newTask);
+
 	/// Update UI
 	updateHtmlUi();
 });
 
-function saveToLocalStorage() {
-	const jsonString = JSON.stringify(tasks);
-	localStorage.setItem('tasks', jsonString);
-}
+
 
 function updateHtmlUi() {
-	tasksDiv.replaceChildren([]);
+	courseDiv.replaceChildren([]);
 
-	for (let i = 0; i < tasks.length; i++) {
-		const task = tasks[i];
-		const newTaskHtml = document.createElement('div');
-		if (task.isChecked) {
-			newTaskHtml.className = 'box task-box checked';
+	for (let i = 0; i < courses.length; i++) {
+		const checkboxHtml = document.createElement('div');
+		const course = courses[i];
+		const newCourseHtml = document.createElement('div');
+		if (course.isChecked) {
+			newCourseHtml.className = 'box course checked';
+			checkboxHtml.innerHTML = ' <span class=" material-symbols-outlined"> done_outline </span>';
 		} else {
-			newTaskHtml.className = 'box task-box';
+			newCourseHtml.className = 'box course';
 		}
 
-		const checkboxHtml = document.createElement('div');
-		checkboxHtml.className = 'task-checkbox';
-		checkboxHtml.innerHTML = '<i class="fa-regular fa-face-grin-beam icon"></i>';
-		checkboxHtml.addEventListener('click', (event) => {
-			tasks[i].isChecked = !tasks[i].isChecked;
-			saveToLocalStorage();
+		checkboxHtml.className = 'check-box ';
+
+		checkboxHtml.addEventListener('click',async (event) => {
+			const updatedcourse = {
+				...courses[i],
+				is_checked: !courses[i].is_checked
+			};
+			await upsertTask(updatedcourse);
+			courses[i] = updatedcourse;
 			updateHtmlUi();
-
+//  return false; 
 		});
-		newTaskHtml.appendChild(checkboxHtml);
+		newCourseHtml.appendChild(checkboxHtml);
 
-		const textHtml = document.createElement('p');
-		textHtml.innerText = task.input;
-		newTaskHtml.appendChild(textHtml);
+		const courseHtml = document.createElement('textarea');
+		courseHtml.className = 'course-input';
+		courseHtml.innerText = course.input;
+		textHtml.oninput = (event) => autoHeight(event.target);
+		/// onblur works after moving outside the input
+		textHtml.onblur = async (event) => {
+			const updatedcourse = {
+				...course[i],
+				input: event.target.value,
+			};
+			await upsertTask(updatedcourse);
+			course[i] = updatedcourse;
+			updateHtmlUi();
+		}; 
 
-		newTaskHtml.addEventListener('dblclick', (event) => {
-			event.preventDefault();
-			if (didPressD) {
-				const yes = confirm('are you sure?');
-				if (!yes) {
-					return;
-				}
-				tasks = tasks.filter((t, index) => index !== i);
-				updateHtmlUi();
-				saveToLocalStorage();
-				didPressD = false;
-				actionLetterDiv.innerText = 'P';
-			} else {
-				const value = prompt('What is the new value?');
-				if (!value) {
-					return;
-				}
-				tasks[i].input = value;
-				updateHtmlUi();
-				saveToLocalStorage();
-			}
-			return false;
 
+
+		newCourseHtml.appendChild(courseHtml);
+		
+		const spacerHtml = document.createElement('div');
+		spacerHtml.className = 'spacer';
+		newCourseHtml.appendChild(spacerHtml);
+
+		const deleteIconHtml = document.createElement('div');
+		deleteIconHtml.innerHTML = '<span class=" material-symbols-outlined"> done_outline </span>';
+		deleteIconHtml.addEventListener('click',async (event) => {
+			const courses_id = course[i].courses_id;
+			await deleteTask(courses_id);
+			course = course.filter((t, index) => index !== i);
+			updateHtmlUi();
 		});
+		newCourseHtml.appendChild(deleteIconHtml);
 
-		// newTaskHtml.addEventListener('');
+		courseDiv.appendChild(newCourseHtml);
+	}
 
-		tasksDiv.appendChild(newTaskHtml);
+	const courseInputs = document.getElementsByClassName('task-input');
+	for (const child of courseInputs) {
+		autoHeight(child);
 	}
 }
+function autoHeight(elem) {  /* javascript */
+	elem.style.height = '1px';
+	elem.style.height = (elem.scrollHeight) + 'px';
+}
 
-let didPressD = false;
-let didPressC = false;
+async function getAllTasks() {
+	const result = await fetch('http://127.0.0.1:3001/course/cousers');
+	return await result.json();
+}
 
-window.addEventListener('keypress', (event) => {
-	if (event.key === 'd') {
-		didPressD = true;
-		didPressC = false;
-		actionLetterDiv.innerText = 'D';
+async function deleteTask(course_id) {
+	await fetch(`http://127.0.0.1:3001/course/${course_id}`, { method: 'DELETE' });
+}
 
-	} else if (event.key === 'p') {
-		didPressD = false;
-		didPressC = false;
-		actionLetterDiv.innerText = 'P';
-	} else if (event.key === 'c') {
-		didPressC = true;
-		didPressD = false;
-		actionLetterDiv.innerText = 'C';
-	}
-});
-
+async function upsertTask(course) {
+	await fetch(`http://127.0.0.1:3001/course/cousers`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(course)
+	});
+}
 
 
 
