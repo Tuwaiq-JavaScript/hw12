@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Page Title</title>
-    <link rel="stylesheet" href="main.css"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <script defer src="main.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-
-
-    <!--  Icons  -->
-    <script src="https://kit.fontawesome.com/12f9c0d1e0.js" crossorigin="anonymous"></script>
-
+    <script src="./packages/bson.bundle.js"></script>
+    <title>ToDo App</title>
 </head>
 <body>
-<div class="main">
-    <div id="action-letter"></div>
-    <h1 class="hero-title">
-        Todo App
-    </h1>
-
-    <!--  Add task button  -->
-    <div id="add-task-button" class="box add-task-box">
-        <div class="pink-box">
-            <i class="fa-solid fa-crow"></i>
-        </div>
-        Add a task
-    </div>
-
-    <!--  Tasks  -->
-    Tasks
-    <div id="tasks" class="tasks">
-
-
-        <div class="box task-box">
-            <div class="task-checkbox">
-                <i class="fa-regular fa-face-grin-beam icon"></i>
+    <div>
+        <p class="p-center">ToDo App</p>
+        <div class="side">
+            <div id="add-tasks" class="btn-left">
+                <button onclick="newElement()" id="add-task" class="btn" role="button"> Add Task</button>
             </div>
-            Send collaboration files to Jerusha
+            <div>
+                <input class="input" type="text" id="myInput" placeholder="Title...">
+            </div>
         </div>
+       
+        <div class="container">
+            <div><p>Tasks</p></div>
+        </div>
+        <hr class="hr">
+        <div id="output" class="output">
+
+            <div id="tasks" class="box">
+                     <p id="task-box" class="center">Task</p> 
+            </div>
+            
+            <textarea class="task-input" oninput="autoHeight(this)"></textarea>
+
+            <div class="btn-delete">
+                <button id="delete-task" class="btn3" role="button">delete</button>
+            </div>
+             
+            </div>
+        </div>
+       
     </div>
-
-</div>
-
+   
 </body>
 </html>
+
+
+
